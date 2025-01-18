@@ -1,7 +1,15 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import "@/styles/globals.css"
+
 import { ClerkProvider } from "@clerk/nextjs"
+
+import "@/styles/globals.css"
+
+import { TanstackProvider } from "@/components/providers/tanstack"
+
+import { Toaster } from "@/components/ui/sonner"
+import { Loader2 } from "lucide-react"
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,7 +36,18 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
         >
-          {children}
+          <TanstackProvider>{children}</TanstackProvider>
+          <Toaster
+            theme="light"
+            richColors={true}
+            closeButton={true}
+            icons={{
+              loading: <Loader2 />,
+            }}
+            toastOptions={{
+              className: "rounded-none",
+            }}
+          />
         </body>
       </html>
     </ClerkProvider>
