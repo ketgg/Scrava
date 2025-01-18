@@ -67,7 +67,7 @@ const WorkflowCard = ({ workflow }: Props) => {
             <h3 className="flex items-center text-sm font-medium text-muted-foreground">
               <Link
                 className="flex items-center hover:underline"
-                href={`/workflows/editor/${workflow.id}`}
+                href={`/workflow/editor/${workflow.id}`}
               >
                 {workflow.name}
               </Link>
@@ -85,7 +85,7 @@ const WorkflowCard = ({ workflow }: Props) => {
               buttonVariants({ variant: "outline", size: "sm" }),
               "flex items-center gap-2"
             )}
-            href={`/workflows/editor/${workflow.id}`}
+            href={`/workflow/editor/${workflow.id}`}
           >
             <Shuffle size={16} />
             Edit

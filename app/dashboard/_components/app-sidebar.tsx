@@ -39,11 +39,11 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  company: {
-    name: "Scrape.io",
-    logo: AudioLines,
-    plan: "Free",
-  },
+  // company: {
+  //   name: "Scrape.io",
+  //   logo: AudioLines,
+  //   plan: "Free",
+  // },
   navMain: [
     {
       title: "Home",
@@ -77,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <NavLogo company={data.company} />
+        <NavLogo />
       </SidebarHeader>
       <SidebarContent>
         <NavMain label="Platform" items={data.navMain} />
