@@ -42,7 +42,7 @@ export default function RootLayout({
             richColors={true}
             closeButton={true}
             icons={{
-              loading: <Loader2 />,
+              loading: <Loader2 className="animate-spin" size={16} />,
             }}
             toastOptions={{
               className: "rounded-none",

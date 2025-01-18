@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 
 import {
   Background,
@@ -9,6 +9,7 @@ import {
   ReactFlow,
   useNodesState,
   useEdgesState,
+  useReactFlow,
 } from "@xyflow/react"
 
 import { Workflow } from "@prisma/client"
@@ -31,10 +32,22 @@ const snapGrid: [number, number] = [10, 10]
 const fitViewOptions = { padding: 1 }
 
 const FlowEditor = ({ workflow }: Props) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([
-    createFlowNode(TaskType.LAUNCH_BROWSER, { x: 0, y: 0 }),
-  ])
+  const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
+  const { setViewport } = useReactFlow()
+  useEffect(() => {
+    try {
+      const def = JSON.parse(workflow.definition)
+      if (!def) return
+
+      setNodes(def.nodes || [])
+      setEdges(def.edges || [])
+
+      if (!def.viewport) return
+      const { x = 0, y = 0, zoom = 1 } = def.viewport
+      setViewport({ x, y, zoom })
+    } catch (error) {}
+  }, [workflow.definition, setNodes, setEdges, setViewport])
 
   return (
     <main className="w-full h-full">
@@ -46,7 +59,7 @@ const FlowEditor = ({ workflow }: Props) => {
         nodeTypes={nodeTypes}
         snapToGrid={true}
         snapGrid={snapGrid}
-        fitView={true} // Center the view on load
+        fitView={true} // Center the view on load, Remove this to use saved viewport
         fitViewOptions={fitViewOptions}
       >
         <Controls position="top-left" fitViewOptions={fitViewOptions} />

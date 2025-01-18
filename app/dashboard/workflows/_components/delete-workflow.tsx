@@ -27,7 +27,7 @@ type Props = {
 }
 
 const DeleteWorkflow = ({ open, setOpen, workflow }: Props) => {
-  const { mutate, isPending } = useMutation({
+  const { mutate: deleteMutation, isPending } = useMutation({
     mutationFn: deleteWorkflow,
     onSuccess: () => {
       toast.success("Workflow deleted successfully", { id: workflow.id })
@@ -58,7 +58,7 @@ const DeleteWorkflow = ({ open, setOpen, workflow }: Props) => {
             disabled={isPending}
             onClick={() => {
               toast.loading("Deleting workflow...", { id: workflow.id })
-              mutate(workflow.id)
+              deleteMutation(workflow.id)
             }}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >

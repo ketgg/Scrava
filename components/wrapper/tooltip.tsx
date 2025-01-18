@@ -17,7 +17,9 @@ const TooltipWrapper = ({ children, content, side = "top" }: Props) => {
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent side={side}>{content}</TooltipContent>
+        <TooltipContent className="" side={side}>
+          {content}
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   )

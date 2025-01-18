@@ -16,7 +16,7 @@ export const LaunchBrowserTask = {
       type: TaskParamType.STRING,
       helperText: "e.g. https://toscrape.com/",
       required: true,
-      hideHandle: false, // As this is the entry point, we don't need a handle
+      hideHandle: true, // As this is the entry point, we don't need a handle
     },
   ],
 }
