@@ -47,26 +47,26 @@ const data = {
   navMain: [
     {
       title: "Home",
-      url: "/",
+      url: "/dashboard",
       icon: Bot,
       isActive: true,
       items: [],
     },
     {
       title: "Workflows",
-      url: "/workflows",
+      url: "/dashboard/workflows",
       icon: GitFork,
       items: [],
     },
     {
       title: "Credentials",
-      url: "/credentials",
+      url: "/dashboard/credentials",
       icon: Key,
       items: [],
     },
     {
       title: "Billing",
-      url: "/billing",
+      url: "/dashboard/billing",
       icon: CircleDollarSign,
       items: [],
     },
@@ -80,7 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavLogo company={data.company} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain label="Application" items={data.navMain} />
+        <NavMain label="Platform" items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
