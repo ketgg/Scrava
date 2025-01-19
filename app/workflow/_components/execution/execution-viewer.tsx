@@ -18,7 +18,10 @@ import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
-import { getExecutionWithPhases } from "@/actions/workflow"
+import {
+  getExecutionWithPhases,
+  getWorkflowPhaseDetails,
+} from "@/actions/workflow"
 
 import { WorkflowExecutionStatus } from "@/types/workflow"
 
@@ -41,6 +44,12 @@ const ExecutionViewer = ({ initialExecData }: Props) => {
     queryFn: () => getExecutionWithPhases(initialExecData!.id),
     refetchInterval: (q) =>
       q.state.data?.status === WorkflowExecutionStatus.RUNNING ? 1000 : false,
+  })
+
+  const phaseDetailsQuery = useQuery({
+    queryKey: ["phaseDetails", selectedPhase],
+    enabled: selectedPhase !== null,
+    queryFn: () => getWorkflowPhaseDetails(selectedPhase!),
   })
 
   const isRunning = query.data?.status === WorkflowExecutionStatus.RUNNING
