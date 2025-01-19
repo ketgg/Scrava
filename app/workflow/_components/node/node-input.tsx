@@ -2,6 +2,8 @@ import React from "react"
 
 import { Handle, Position, useEdges } from "@xyflow/react"
 
+import useFlowValidation from "@/hooks/use-flow-validation"
+
 import NodeParamField from "./node-param-field"
 
 import { cn } from "@/lib/utils"
@@ -21,8 +23,17 @@ const NodeInput = ({ input, nodeId }: Props) => {
     (edge) => edge.target === nodeId && edge.targetHandle === input.name
   )
 
+  const { nodesWithInvalidInputs } = useFlowValidation()
+  const node = nodesWithInvalidInputs.find((node) => node.nodeId === nodeId)
+  const isInvalidInput = node?.invalidInputs.includes(input.name)
+
   return (
-    <div className="flex justify-start relative p-3 bg-secondary w-full">
+    <div
+      className={cn(
+        "flex justify-start relative p-3 bg-secondary w-full",
+        isInvalidInput && "bg-destructive/30"
+      )}
+    >
       <NodeParamField param={input} nodeId={nodeId} disabled={isConnected} />
       {!input.hideHandle && (
         <Handle

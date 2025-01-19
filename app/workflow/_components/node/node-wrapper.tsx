@@ -11,6 +11,8 @@ import NodeOutput from "./node-output"
 import { AppNodeData } from "@/types/app-node"
 import { TaskRegistry } from "@/configs/workflow/task-registry"
 
+const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE === "true"
+
 const NodeWrapper = memo(({ id, data, selected }: NodeProps) => {
   const nodeData = data as AppNodeData
   const task = TaskRegistry[nodeData.type]
@@ -19,6 +21,11 @@ const NodeWrapper = memo(({ id, data, selected }: NodeProps) => {
     // isSelected={!!selected} Boolean conversion
     // as selected can be undefined
     <NodeCard nodeId={id} isSelected={!!selected}>
+      {isDevMode && (
+        <div className="flex items-center justify-center text-xs text-semibold">
+          DEV MODE: {id}
+        </div>
+      )}
       <NodeHeader taskType={nodeData.type} nodeId={id} />
       <NodeInputs>
         {task.inputs.map((input) => (

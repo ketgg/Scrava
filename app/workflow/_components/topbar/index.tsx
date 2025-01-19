@@ -9,6 +9,7 @@ import { ChevronLeft } from "lucide-react"
 import TooltipWrapper from "@/components/wrapper/tooltip"
 import { Button } from "@/components/ui/button"
 
+import ExecuteButton from "./execute-btn"
 import SaveButton from "./save-btn"
 
 type Props = {
@@ -41,7 +42,8 @@ const Topbar = ({ title, subtitle, workflowId }: Props) => {
           )}
         </div>
       </div>
-      <div className="flex gap-1 flex-1 items-center justify-end">
+      <div className="flex gap-2 flex-1 items-center justify-end">
+        <ExecuteButton workflowId={workflowId} />
         <SaveButton workflowId={workflowId} />
       </div>
     </header>

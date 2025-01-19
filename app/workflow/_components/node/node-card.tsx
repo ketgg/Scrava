@@ -3,6 +3,8 @@
 import React from "react"
 import { useReactFlow } from "@xyflow/react"
 
+import useFlowValidation from "@/hooks/use-flow-validation"
+
 import { cn } from "@/lib/utils"
 
 import { NODE_DIMENSIONS } from "@/constants/node"
@@ -15,7 +17,10 @@ type Props = {
 
 const NodeCard = ({ nodeId, isSelected, children }: Props) => {
   const { getNode, setCenter } = useReactFlow()
-
+  const { nodesWithInvalidInputs } = useFlowValidation()
+  const isNodeWithInvalidInputs = nodesWithInvalidInputs.some(
+    (node) => node.nodeId === nodeId
+  )
   return (
     <div
       onDoubleClick={() => {
@@ -34,7 +39,8 @@ const NodeCard = ({ nodeId, isSelected, children }: Props) => {
       }}
       className={cn(
         "flex flex-col gap-1 text-xs border border-separate bg-background rounded-none",
-        isSelected && "border-primary"
+        isSelected && "border-primary",
+        isNodeWithInvalidInputs && "border border-destructive"
       )}
       style={{ width: `${NODE_DIMENSIONS.WIDTH_REM}rem` }}
     >

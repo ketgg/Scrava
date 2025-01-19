@@ -142,7 +142,7 @@ const FlowEditor = ({ workflow }: Props) => {
       const targetInput = targetTask.inputs.find(
         (i) => i.name === connection.targetHandle
       )
-      console.log("@@DEBUG", sourceOuput, targetInput)
+      // console.log("@@DEBUG", sourceOuput, targetInput)
 
       // Return false if the type is not same
       if (sourceOuput?.type !== targetInput?.type) return false
