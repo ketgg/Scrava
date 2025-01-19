@@ -19,7 +19,7 @@ const NodeWrapper = memo(({ id, data, selected }: NodeProps) => {
     // isSelected={!!selected} Boolean conversion
     // as selected can be undefined
     <NodeCard nodeId={id} isSelected={!!selected}>
-      <NodeHeader taskType={nodeData.type} />
+      <NodeHeader taskType={nodeData.type} nodeId={id} />
       <NodeInputs>
         {task.inputs.map((input) => (
           <NodeInput key={input.name} input={input} nodeId={id} />
