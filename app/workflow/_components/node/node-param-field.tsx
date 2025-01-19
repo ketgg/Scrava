@@ -4,6 +4,7 @@ import React, { useCallback } from "react"
 import { useReactFlow } from "@xyflow/react"
 
 import StringParam from "./param/string-param"
+import BrowserInstanceParam from "./param/browser-instance-param"
 
 import { TaskParam, TaskParamType } from "@/types/task"
 import { AppNode } from "@/types/app-node"
@@ -11,9 +12,10 @@ import { AppNode } from "@/types/app-node"
 type Props = {
   param: TaskParam
   nodeId: string
+  disabled: boolean
 }
 
-const NodeParamField = ({ param, nodeId }: Props) => {
+const NodeParamField = ({ param, nodeId, disabled }: Props) => {
   const { getNode, updateNodeData } = useReactFlow()
 
   /**
@@ -29,13 +31,13 @@ const NodeParamField = ({ param, nodeId }: Props) => {
    *  }
    *  dragHandle: ".drag-handle"
    *  position: { x: 0, y: 0 }
-   *  measure: { width: 100, height: 100 }
+   *  measure: { width: 400, height: 100 }
    *  draggable: true
    *  selected: false
    * }
    */
   const node = getNode(nodeId) as AppNode
-  // console.log("@Node", node)
+  // console.log("@NODE from NodeParamField", node)
 
   // On initial load, there is no [param.name] in the node.data.inputs.
   // So we need to set the value to an empty string as it will be undefined.
@@ -54,12 +56,22 @@ const NodeParamField = ({ param, nodeId }: Props) => {
     },
     [nodeId, node?.data.inputs, param.name, updateNodeData]
   )
+  // console.log("@NODE from NodeParamField", node)
   switch (param.type) {
     case TaskParamType.STRING:
       return (
         <StringParam
           param={param}
           value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
+        />
+      )
+    case TaskParamType.BROWSER_INSTANCE:
+      return (
+        <BrowserInstanceParam
+          param={param}
+          value={""}
           updateNodeParamValue={updateNodeParamValue}
         />
       )

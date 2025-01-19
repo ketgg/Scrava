@@ -33,7 +33,7 @@ const Topbar = ({ title, subtitle, workflowId }: Props) => {
           </Button>
         </TooltipWrapper>
         <div>
-          <p className="font-semibold text-ellipsis truncate">{title}</p>
+          <p className="font-bold text-ellipsis truncate">{title}</p>
           {subtitle && (
             <p className="text-xs text-muted-foreground text-ellipsis truncate">
               {subtitle}

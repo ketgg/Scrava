@@ -7,6 +7,7 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./configs/**/*.{js,ts,jsx,tsx,mdx}",
+    "./constants/handle.ts",
   ],
   theme: {
     extend: {

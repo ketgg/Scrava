@@ -5,6 +5,8 @@ import NodeCard from "./node-card"
 import NodeHeader from "./node-header"
 import NodeInputs from "./node-inputs"
 import NodeInput from "./node-input"
+import NodeOutputs from "./node-outputs"
+import NodeOutput from "./node-output"
 
 import { AppNodeData } from "@/types/app-node"
 import { TaskRegistry } from "@/configs/workflow/task-registry"
@@ -23,6 +25,11 @@ const NodeWrapper = memo(({ id, data, selected }: NodeProps) => {
           <NodeInput key={input.name} input={input} nodeId={id} />
         ))}
       </NodeInputs>
+      <NodeOutputs>
+        {task.outputs.map((output) => (
+          <NodeOutput key={output.name} output={output} nodeId={id} />
+        ))}
+      </NodeOutputs>
     </NodeCard>
   )
 })

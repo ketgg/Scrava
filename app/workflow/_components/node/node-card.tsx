@@ -5,6 +5,8 @@ import { useReactFlow } from "@xyflow/react"
 
 import { cn } from "@/lib/utils"
 
+import { NODE_DIMENSIONS } from "@/constants/node"
+
 type Props = {
   nodeId: string
   isSelected: boolean
@@ -31,9 +33,10 @@ const NodeCard = ({ nodeId, isSelected, children }: Props) => {
         })
       }}
       className={cn(
-        "flex flex-col gap-1 text-xs w-[25rem] border border-separate bg-background rounded-none",
+        "flex flex-col gap-1 text-xs border border-separate bg-background rounded-none",
         isSelected && "border-primary"
       )}
+      style={{ width: `${NODE_DIMENSIONS.WIDTH_REM}rem` }}
     >
       {children}
     </div>

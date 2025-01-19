@@ -8,6 +8,7 @@ import { Workflow } from "@prisma/client"
 
 import Topbar from "./topbar"
 import FlowEditor from "./flow-editor"
+import TaskMenu from "./task-menu"
 
 type Props = {
   workflow: Workflow
@@ -23,6 +24,7 @@ const Editor = ({ workflow }: Props) => {
           workflowId={workflow.id}
         />
         <section className="flex h-full overflow-auto">
+          <TaskMenu />
           <FlowEditor workflow={workflow} />
         </section>
       </div>

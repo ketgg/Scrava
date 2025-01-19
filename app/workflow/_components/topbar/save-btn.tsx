@@ -34,7 +34,7 @@ const SaveButton = ({ workflowId }: Props) => {
         toast.loading("Saving workflow...", { id: "save-workflow" })
         saveMutation({ id: workflowId, definition: workflowDefinition })
       }}
-      variant="outline"
+      variant="default"
       className="flex items-center"
     >
       <HardDriveUpload />
