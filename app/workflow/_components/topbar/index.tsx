@@ -16,9 +16,15 @@ type Props = {
   title: string
   subtitle?: string
   workflowId: string
+  hideButtons?: boolean
 }
 
-const Topbar = ({ title, subtitle, workflowId }: Props) => {
+const Topbar = ({
+  title,
+  subtitle,
+  workflowId,
+  hideButtons = false,
+}: Props) => {
   const router = useRouter()
   return (
     <header className="flex justify-between p-2 border-b border-separate w-full h-14 sticky top-0 bg-background z-10">
@@ -42,9 +48,14 @@ const Topbar = ({ title, subtitle, workflowId }: Props) => {
           )}
         </div>
       </div>
+
       <div className="flex gap-2 flex-1 items-center justify-end">
-        <ExecuteButton workflowId={workflowId} />
-        <SaveButton workflowId={workflowId} />
+        {!hideButtons && (
+          <>
+            <ExecuteButton workflowId={workflowId} />
+            <SaveButton workflowId={workflowId} />
+          </>
+        )}
       </div>
     </header>
   )

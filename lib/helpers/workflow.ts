@@ -1,4 +1,4 @@
-import { Edge, getIncomers } from "@xyflow/react"
+import { Edge } from "@xyflow/react"
 
 import { AppNode, AppNodeInvalidInputs } from "@/types/app-node"
 import { TaskType } from "@/types/task"
@@ -141,4 +141,13 @@ export const getInvalidInputs = (node: AppNode, edges: Edge[], planned: Set<stri
     invalidInputs.push(input.name)
   }
   return invalidInputs
+}
+
+const getIncomers = (node: AppNode, nodes: AppNode[], edges: Edge[]) => {
+  if(!node.id) return []
+  const incomersIds = new Set()
+  edges.forEach((edge) => {
+    if(edge.target === node.id) incomersIds.add(edge.source)
+  })
+  return nodes.filter((node) => incomersIds.has(node.id))
 }
