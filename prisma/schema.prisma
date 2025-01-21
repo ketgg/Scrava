@@ -19,7 +19,12 @@ model Workflow {
   name        String
   description String?
   definition  String
-  status      String
+  status      String   // DRAFT, PUBLISHED
+
+  lastRunAt   DateTime?
+  lastRunId   String? 
+  lastRunStatus String?
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -35,6 +40,8 @@ model WorkflowExecution {
   userId      String
   trigger     String
   status      String
+  definition  String    @default("{}")
+  creditsConsumed Int?  @default(0)
   createdAt   DateTime  @default(now())
   startedAt   DateTime?
   completedAt DateTime?
@@ -59,4 +66,16 @@ model ExecutionPhase {
 
   executionId String
   execution   WorkflowExecution @relation(fields: [executionId], references: [id], onDelete: Cascade) // Cascade means that all the phases will be deleted if the execution is deleted
+
+  execLogs    ExecutionLog[]
+}
+
+model ExecutionLog {
+  id          String   @id @default(cuid())
+  logLevel    String
+  message     String
+  timestamp   DateTime @default(now())
+
+  execPhaseId String
+  execPhase   ExecutionPhase @relation(fields: [execPhaseId], references: [id], onDelete: Cascade)
 }

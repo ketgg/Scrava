@@ -20,13 +20,13 @@ export const LaunchBrowserTask = {
       required: true,
       hideHandle: true, // As this is the entry point, we don't need a handle
     },
-  ],
+  ] as const,
   outputs: [
     {
       name: "Webpage",
       type: TaskParamType.BROWSER_INSTANCE,
     },
-  ],
+  ] as const,
 } satisfies WorkflowTask
 
 export const PageToHtmlTask = {
@@ -44,14 +44,14 @@ export const PageToHtmlTask = {
       type: TaskParamType.BROWSER_INSTANCE,
       required: true,
     },
-  ],
+  ] as const,
   outputs: [
     { name: "HTML", type: TaskParamType.STRING },
     {
       name: "Webpage",
       type: TaskParamType.BROWSER_INSTANCE,
     },
-  ],
+  ] as const,
 } satisfies WorkflowTask
 
 export const ExtractTextFromElementTask = {
@@ -74,6 +74,11 @@ export const ExtractTextFromElementTask = {
       type: TaskParamType.STRING,
       required: true,
     },
-  ],
-  outputs: [{ name: "Extracted Text", type: TaskParamType.STRING }],
+  ] as const,
+  outputs: [
+    {
+      name: "Extracted Text",
+      type: TaskParamType.STRING,
+    },
+  ] as const,
 } satisfies WorkflowTask

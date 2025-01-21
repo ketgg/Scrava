@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma"
 
 import { Edge } from "@xyflow/react"
 
+import { executeWorkflow } from "./execute"
+
 import {
   createWorkflowSchema,
   CreateWorkflowSchemaType,
@@ -24,6 +26,7 @@ import { TaskType } from "@/types/task"
 
 import { createFlowNode, flowToExecutionPlan } from "@/lib/helpers/workflow"
 import { TaskRegistry } from "@/configs/workflow/task-registry"
+import { redirect } from "next/navigation"
 
 export const getUserWorkflows = async () => {
   try {
@@ -153,6 +156,7 @@ export const runWorkflow = async (data: {
       userId: userId,
       status: WorkflowExecutionStatus.PENDING,
       trigger: WorkflowExecutionTrigger.MANUAL,
+      definition: workflowDefinition,
       startedAt: new Date(),
       phases: {
         create: executionPlan.flatMap((phase) => {
@@ -175,7 +179,13 @@ export const runWorkflow = async (data: {
   })
   if (!execution) throw new Error("Failed to create workflow execution")
 
-  return execution
+  // Execute the workflow - Runs on the server only
+  executeWorkflow(execution.id)
+
+  // Return the execution object
+  // As the ID is used for redirecting in the frontend
+  // return execution
+  redirect(`/workflow/runs/${workflowId}/${execution.id}`)
 }
 
 /**
@@ -210,6 +220,13 @@ export const getWorkflowPhaseDetails = async (phaseId: string) => {
 
   const phase = await prisma.executionPhase.findUnique({
     where: { id: phaseId, userId: userId },
+    include: {
+      execLogs: {
+        orderBy: {
+          timestamp: "asc",
+        },
+      },
+    },
   })
   if (!phase) throw new Error("Phase not found")
 

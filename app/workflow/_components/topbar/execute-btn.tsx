@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { isRedirectError } from "next/dist/client/components/redirect-error"
 
 import React from "react"
 import { PlayIcon } from "lucide-react"
@@ -26,13 +27,17 @@ const ExecuteButton = ({ workflowId }: Props) => {
   const runMutation = useMutation({
     mutationFn: runWorkflow,
     onSuccess: (execution) => {
-      toast.success("Workflow executed successfully", {
+      toast.success("Execution started successfully", {
         id: "workflow-execution",
       })
-      router.push(`/workflow/runs/${workflowId}/${execution.id}`)
+      // router.push(`/workflow/runs/${workflowId}/${execution.id}`)
     },
-    onError: () => {
-      toast.error("Failed to execute workflow", { id: "workflow-execution" })
+    onError: (err) => {
+      if (isRedirectError(err)) {
+        // Ignore redirect errors
+        return
+      }
+      toast.error("Failed to start the execution", { id: "workflow-execution" })
     },
   })
 

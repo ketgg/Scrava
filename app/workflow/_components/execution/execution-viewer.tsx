@@ -130,6 +130,9 @@ const ExecutionViewer = ({ initialExecData }: Props) => {
           ))}
         </div>
       </aside>
+      <div className="flex w-full h-full">
+        <pre>{JSON.stringify(phaseDetailsQuery.data, null, 4)}</pre>
+      </div>
     </div>
   )
 }
