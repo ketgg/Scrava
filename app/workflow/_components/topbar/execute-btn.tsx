@@ -34,6 +34,9 @@ const ExecuteButton = ({ workflowId }: Props) => {
     },
     onError: (err) => {
       if (isRedirectError(err)) {
+        toast.success("Execution started successfully", {
+          id: "workflow-execution",
+        })
         // Ignore redirect errors
         return
       }

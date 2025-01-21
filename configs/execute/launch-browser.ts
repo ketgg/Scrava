@@ -10,6 +10,9 @@ export const launchBrowserExecutor = async (
 
     // Open the browser in background
     const browser = await puppeteer.launch({ headless: true })
+    environment.log.info(
+      `Browser launched successfully: ${await browser.version()}`
+    )
     environment.setBrowser(browser)
 
     const page = await browser.newPage()
@@ -17,6 +20,7 @@ export const launchBrowserExecutor = async (
 
     // Our scraper will only work on single page
     environment.setPage(page)
+    environment.log.info(`Navigated to ${websiteUrl}`)
 
     return true
   } catch (error: any) {
