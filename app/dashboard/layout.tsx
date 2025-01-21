@@ -8,6 +8,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import UserAvailableBalance from "@/components/credits/user-available-balace"
 
 export default function DashboardLayout({
   children,
@@ -25,9 +26,19 @@ export default function DashboardLayout({
               <Separator orientation="vertical" className="mr-2 h-4" />
               <AppBreadcrumb />
             </div>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
+            <div className="flex items-center gap-3">
+              <UserAvailableBalance />
+
+              <SignedIn>
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonAvatarBox: "w-9 h-9",
+                    },
+                  }}
+                />
+              </SignedIn>
+            </div>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>

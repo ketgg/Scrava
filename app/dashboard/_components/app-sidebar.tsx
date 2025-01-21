@@ -25,6 +25,8 @@ import {
 import { NavMain } from "./nav-main"
 import { NavUser } from "./nav-user"
 import { NavLogo } from "./nav-logo"
+import UserAvailableBalance from "@/components/credits/user-available-balace"
+
 import {
   Sidebar,
   SidebarContent,

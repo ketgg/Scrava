@@ -184,7 +184,7 @@ const ExecutionViewer = ({ initialExecData }: Props) => {
                   <CoinsIcon size={16} className="stroke-muted-foreground" />
                   <span>Credits</span>
                 </div>
-                <span>TODO</span>
+                <span>{phaseDetailsQuery.data?.creditsConsumed || "-"}</span>
               </Badge>
               <Badge variant="outline" className="space-x-2 rounded-full">
                 <div className="flex items-center gap-1">

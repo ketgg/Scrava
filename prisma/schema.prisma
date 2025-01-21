@@ -79,3 +79,8 @@ model ExecutionLog {
   execPhaseId String
   execPhase   ExecutionPhase @relation(fields: [execPhaseId], references: [id], onDelete: Cascade)
 }
+
+model UserBalance {
+  userId      String   @id
+  credits     Int      @default(0)
+}

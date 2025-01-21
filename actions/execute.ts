@@ -21,6 +21,7 @@ import {
 import { LogCollector } from "@/types/log"
 
 import { createLogCollector } from "@/lib/helpers/log"
+import { decrementUserBalance } from "./credits"
 
 export const executeWorkflow = async (executionId: string) => {
   const execution = await prisma.workflowExecution.findUnique({
@@ -46,7 +47,13 @@ export const executeWorkflow = async (executionId: string) => {
   let creditsConsumed = 0
   let executionFailed = false
   for (const phase of execution.phases) {
-    const phaseExecution = await executeWorkflowPhase(phase, environment, edges)
+    const phaseExecution = await executeWorkflowPhase(
+      execution.userId,
+      phase,
+      environment,
+      edges
+    )
+    creditsConsumed += phaseExecution.creditsConsumed
     if (!phaseExecution.success) {
       executionFailed = true
       break
@@ -103,6 +110,7 @@ const initializeWorkflowPhases = async (execution: any) => {
 }
 
 const executeWorkflowPhase = async (
+  userId: string,
   phase: ExecutionPhase,
   environment: Environment,
   edges: Edge[]
@@ -123,17 +131,23 @@ const executeWorkflowPhase = async (
   })
 
   const creditsRequired = TaskRegistry[node.data.type].credits
-
-  // TODO: Decrement user credits balance
-
-  // Execute the phase
-  const success = await executePhase(environment, phase, node, logCollector)
+  // Decrement user credits balance
+  let success = await decrementUserBalance(
+    userId,
+    creditsRequired,
+    logCollector
+  )
+  const creditsConsumed = success ? creditsRequired : 0
+  if (success) {
+    // Execute the phase
+    success = await executePhase(environment, phase, node, logCollector)
+  }
 
   const outputs = environment.phases[node.id].outputs
 
-  await finalizePhase(phase.id, outputs, success, logCollector)
+  await finalizePhase(phase.id, outputs, success, logCollector, creditsConsumed)
 
-  return { success }
+  return { success, creditsConsumed }
 }
 
 /**
@@ -205,7 +219,8 @@ const finalizePhase = async (
   phaseId: string,
   outputs: any,
   success: boolean,
-  logCollector: LogCollector
+  logCollector: LogCollector,
+  creditsConsumed: number
 ) => {
   const finalStatus = success
     ? WorkflowExecutionPhaseStatus.COMPLETED
@@ -217,6 +232,7 @@ const finalizePhase = async (
       status: finalStatus,
       completedAt: new Date(),
       outputs: JSON.stringify(outputs),
+      creditsConsumed,
       execLogs: {
         createMany: {
           data: logCollector.getAll().map((log) => ({

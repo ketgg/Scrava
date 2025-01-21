@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight, Coins, type LucideIcon } from "lucide-react"
 
 import {
   Collapsible,
@@ -18,6 +18,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import UserAvailableBalance from "@/components/credits/user-available-balace"
 
 export function NavMain({
   label,
