@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 
 import ExecuteButton from "./execute-btn"
 import SaveButton from "./save-btn"
+import NavigationTabs from "./navigation-tabs"
 
 type Props = {
   title: string
@@ -48,7 +49,7 @@ const Topbar = ({
           )}
         </div>
       </div>
-
+      <NavigationTabs workflowId={workflowId} />
       <div className="flex gap-2 flex-1 items-center justify-end">
         {!hideButtons && (
           <>

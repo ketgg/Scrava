@@ -232,3 +232,20 @@ export const getWorkflowPhaseDetails = async (phaseId: string) => {
 
   return phase
 }
+
+export const getWorkflowExecutions = async (workflowId: string) => {
+  const { userId } = await auth()
+  if (!userId) throw new Error("Unauthenticated")
+
+  const executions = await prisma.workflowExecution.findMany({
+    where: {
+      workflowId: workflowId,
+      userId: userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
+
+  return executions
+}

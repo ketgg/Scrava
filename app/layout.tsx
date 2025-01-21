@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google"
 
 import { ClerkProvider } from "@clerk/nextjs"
 
+import NextTopLoader from "nextjs-toploader"
+
 import "@/styles/globals.css"
 
 import { TanstackProvider } from "@/components/providers/tanstack"
@@ -36,6 +38,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
         >
+          <NextTopLoader
+            crawl={false}
+            height={2}
+            showSpinner={false}
+            color="#000000"
+            shadow={false}
+          />
           <TanstackProvider>{children}</TanstackProvider>
           <Toaster
             theme="light"

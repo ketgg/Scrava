@@ -22,7 +22,11 @@ const ExecutionViewerPage = async ({ params }: Props) => {
         <Suspense
           fallback={
             <div className="flex w-full items-center justify-center">
-              <Loader2 className="w-10 h-10 animate-spin stroke-primary" />
+              <Loader2
+                size={24}
+                strokeWidth={1.5}
+                className="animate-spin stroke-primary"
+              />
             </div>
           }
         >

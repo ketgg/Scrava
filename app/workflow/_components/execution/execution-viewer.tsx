@@ -95,7 +95,16 @@ const ExecutionViewer = ({ initialExecData }: Props) => {
           <ExecutionLabel
             icon={CircleDashed}
             label="Status"
-            value={query.data?.status}
+            value={
+              <div className="flex items-center gap-2 font-medium capitalize">
+                {/* TODO: Add a better status badge */}
+                {/* Currently we are casting the execution status as a phase status */}
+                <PhaseStatusBadge
+                  status={query.data?.status as WorkflowExecutionPhaseStatus}
+                />
+                <span>{query.data?.status}</span>
+              </div>
+            }
           />
           <ExecutionLabel
             icon={Calendar}
