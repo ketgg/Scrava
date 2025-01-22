@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button"
 import TooltipWrapper from "@/components/wrapper/tooltip"
 
 import DeleteWorkflow from "./delete-workflow"
+import RunButton from "./run-btn"
 
 import { WorkflowStatus } from "@/types/workflow"
 
@@ -47,6 +48,7 @@ const workflowStatusColors = {
 
 const WorkflowCard = ({ workflow }: Props) => {
   const isDraft = workflow.status === WorkflowStatus.DRAFT
+  const isPublished = workflow.status === WorkflowStatus.PUBLISHED
   return (
     <Card className="shadow-none hover:shadow-sm transition-shadow duration-150">
       <CardContent className="flex items-center justify-between p-4">
@@ -76,10 +78,16 @@ const WorkflowCard = ({ workflow }: Props) => {
                   Draft
                 </span>
               )}
+              {isPublished && (
+                <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                  Published
+                </span>
+              )}
             </h3>
           </div>
         </div>
         <div className="flex items-center space-x-2">
+          {isPublished && <RunButton workflowId={workflow.id} />}
           <Link
             className={cn(
               buttonVariants({ variant: "outline", size: "sm" }),

@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useReactFlow } from "@xyflow/react"
 import { toast } from "sonner"
 
-import { HardDriveUpload, Loader2 } from "lucide-react"
+import { Check } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { updateWorkflow } from "@/actions/workflow"
@@ -34,10 +34,10 @@ const SaveButton = ({ workflowId }: Props) => {
         toast.loading("Saving workflow...", { id: "save-workflow" })
         saveMutation({ id: workflowId, definition: workflowDefinition })
       }}
-      variant="default"
+      variant="outline"
       className="flex items-center"
     >
-      <HardDriveUpload />
+      <Check />
       {isPending ? "Saving" : "Save"}
     </Button>
   )

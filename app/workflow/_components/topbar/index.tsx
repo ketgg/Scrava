@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button"
 
 import ExecuteButton from "./execute-btn"
 import SaveButton from "./save-btn"
+import PublishButton from "./publish-btn"
+import UnpublishButton from "./unpublish-btn"
 import NavigationTabs from "./navigation-tabs"
 
 type Props = {
@@ -18,6 +20,7 @@ type Props = {
   subtitle?: string
   workflowId: string
   hideButtons?: boolean
+  isPublished?: boolean
 }
 
 const Topbar = ({
@@ -25,6 +28,7 @@ const Topbar = ({
   subtitle,
   workflowId,
   hideButtons = false,
+  isPublished = false,
 }: Props) => {
   const router = useRouter()
   return (
@@ -54,7 +58,13 @@ const Topbar = ({
         {!hideButtons && (
           <>
             <ExecuteButton workflowId={workflowId} />
-            <SaveButton workflowId={workflowId} />
+            {isPublished && <UnpublishButton workflowId={workflowId} />}
+            {!isPublished && (
+              <>
+                <SaveButton workflowId={workflowId} />
+                <PublishButton workflowId={workflowId} />
+              </>
+            )}
           </>
         )}
       </div>
