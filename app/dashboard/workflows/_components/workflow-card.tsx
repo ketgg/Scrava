@@ -23,12 +23,18 @@ import TooltipWrapper from "@/components/wrapper/tooltip"
 import DeleteWorkflow from "./delete-workflow"
 import RunButton from "./run-btn"
 
-import { WorkflowStatus } from "@/types/workflow"
+import { WorkflowExecutionStatus, WorkflowStatus } from "@/types/workflow"
 
 import { cn } from "@/lib/utils"
 import {
+  ChevronRight,
+  Clock,
+  Coins,
+  CornerDownRight,
+  CornerRightDown,
   FileText,
   MoreVertical,
+  MoveRight,
   Pencil,
   PencilLine,
   Play,
@@ -36,6 +42,14 @@ import {
   Trash,
   Trash2,
 } from "lucide-react"
+import SchedulerDialog from "./scheduler-dialog"
+import { Badge } from "@/components/ui/badge"
+import { format, formatDistanceToNow } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz"
+import ExecutionStatusIndicator, {
+  ExecutionStatusLabel,
+} from "@/app/workflow/runs/[workflowId]/_components/execution-status-indicator"
+import next from "next"
 
 type Props = {
   workflow: Workflow
@@ -84,6 +98,12 @@ const WorkflowCard = ({ workflow }: Props) => {
                 </span>
               )}
             </h3>
+            <ScheduleSection
+              isDraft={workflow.status === "DRAFT"}
+              creditsCost={workflow.creditsCost}
+              workflowId={workflow.id}
+              cron={workflow.cron}
+            />
           </div>
         </div>
         <div className="flex items-center space-x-2">
@@ -101,7 +121,46 @@ const WorkflowCard = ({ workflow }: Props) => {
           <WorkflowActions workflow={workflow} />
         </div>
       </CardContent>
+      <LastRunDetails workflow={workflow} />
     </Card>
+  )
+}
+
+const ScheduleSection = ({
+  isDraft,
+  creditsCost,
+  workflowId,
+  cron,
+}: {
+  isDraft: boolean
+  creditsCost: number
+  workflowId: string
+  cron: string | null
+}) => {
+  if (isDraft) return null
+  return (
+    <div className="flex items-center gap-2">
+      <CornerDownRight size={16} className="text-muted-foreground" />
+      {/* Adding cron in key so whenever cron values changes i.e. when we remove cron in cron dialog component rerenders */}
+      {/* Lol nvm not working TODO - Find a better way */}
+      <SchedulerDialog
+        workflowId={workflowId}
+        cron={cron}
+        key={`${cron}-${workflowId}`}
+      />
+      <MoveRight className="h-4 w-4 text-muted-foreground" />
+      <TooltipWrapper content="Credit consumption for full run">
+        <div className="flex items-center gap-3">
+          <Badge
+            variant={"outline"}
+            className="text-muted-foreground rounded-full"
+          >
+            <Coins className="h-4 w-4" />
+            <span className="text-sm">{creditsCost}</span>
+          </Badge>
+        </div>
+      </TooltipWrapper>
+    </div>
   )
 }
 
@@ -139,6 +198,55 @@ const WorkflowActions = ({ workflow }: Props) => {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
+  )
+}
+
+const LastRunDetails = ({ workflow }: { workflow: Workflow }) => {
+  const isDraft = workflow.status === WorkflowStatus.DRAFT
+  if (isDraft) {
+    return null
+  }
+  const { lastRunAt, lastRunStatus, lastRunId, nextRunAt } = workflow
+  const formattedStartedAt =
+    lastRunAt && formatDistanceToNow(lastRunAt, { addSuffix: true })
+
+  const nextSchedule = nextRunAt && format(nextRunAt, "yyyy-MM-dd HH:mm")
+  const nextScheduleUTC =
+    nextRunAt && formatInTimeZone(nextRunAt, "UTC", "HH:mm")
+  return (
+    <div className="bg-primary/5 px-4 py-1 flex justify-between items-center text-muted-foreground">
+      <div className="flex items-center text-sm gap-2">
+        {lastRunAt && (
+          <Link
+            href={`/workflow/runs/${workflow.id}/${lastRunId}`}
+            className="flex items-center text-sm gap-2 group"
+          >
+            <span>Last run:</span>
+            <ExecutionStatusIndicator
+              status={lastRunStatus as WorkflowExecutionStatus}
+            />
+            <ExecutionStatusLabel
+              status={lastRunStatus as WorkflowExecutionStatus}
+            />
+            {/* <span>{lastRunStatus}</span> */}
+            <span>{formattedStartedAt}</span>
+            <ChevronRight
+              size={14}
+              className="group-hover:translate-x-2 transition"
+            />
+          </Link>
+        )}
+        {!lastRunAt && <p>No runs yet</p>}
+      </div>
+      {nextRunAt && (
+        <div className="flex items-center gap-2 text-sm">
+          <Clock size={12} />
+          <span>Next run at:</span>
+          <span>{nextSchedule}</span>
+          <span className="text-sm">({nextScheduleUTC} UTC)</span>
+        </div>
+      )}
+    </div>
   )
 }
 

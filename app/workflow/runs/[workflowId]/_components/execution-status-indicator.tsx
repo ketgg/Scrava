@@ -20,3 +20,14 @@ const ExecutionStatusIndicator = ({ status }: Props) => {
 }
 
 export default ExecutionStatusIndicator
+
+const labelColors: Record<WorkflowExecutionStatus, string> = {
+  PENDING: "text-slate-400",
+  RUNNING: "text-yellow-400",
+  FAILED: "text-red-400",
+  COMPLETED: "text-green-400",
+}
+
+export const ExecutionStatusLabel = ({ status }: Props) => {
+  return <span className={cn("lowercase", labelColors[status])}>{status}</span>
+}

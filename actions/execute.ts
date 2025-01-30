@@ -23,7 +23,10 @@ import { LogCollector } from "@/types/log"
 import { createLogCollector } from "@/lib/helpers/log"
 import { decrementUserBalance } from "./credits"
 
-export const executeWorkflow = async (executionId: string) => {
+export const executeWorkflow = async (
+  executionId: string,
+  nextRunAt?: Date
+) => {
   const execution = await prisma.workflowExecution.findUnique({
     where: { id: executionId },
     include: {
@@ -39,7 +42,11 @@ export const executeWorkflow = async (executionId: string) => {
   const environment: Environment = { phases: {} }
 
   // Initialize workflow execution
-  await initializeWorkflowExecution(executionId, execution.workflowId)
+  await initializeWorkflowExecution(
+    executionId,
+    execution.workflowId,
+    nextRunAt
+  )
 
   // Initialize phases
   await initializeWorkflowPhases(execution)
@@ -76,7 +83,8 @@ export const executeWorkflow = async (executionId: string) => {
 
 const initializeWorkflowExecution = async (
   executionId: string,
-  workflowId: string
+  workflowId: string,
+  nextRunAt?: Date
 ) => {
   await prisma.workflowExecution.update({
     where: { id: executionId },
@@ -92,6 +100,7 @@ const initializeWorkflowExecution = async (
       lastRunAt: new Date(),
       lastRunId: executionId,
       lastRunStatus: WorkflowExecutionStatus.RUNNING,
+      ...(nextRunAt && { nextRunAt }),
     },
   })
 }
