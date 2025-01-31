@@ -11,6 +11,7 @@ import {
   File,
   Database,
   Link2,
+  ArrowUp,
 } from "lucide-react"
 
 import { TaskType, TaskParamType } from "@/types/task"
@@ -318,6 +319,33 @@ export const NavigateURLTask = {
     },
     {
       name: "URL",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Wepage",
+      type: TaskParamType.BROWSER_INSTANCE,
+    },
+  ] as const,
+} satisfies WorkflowTask
+
+export const ScrollToElementTask = {
+  type: TaskType.SCROLL_TO_ELEMET,
+
+  label: "Scroll To Element",
+  icon: (props) => <ArrowUp className="stroke-orange-400" {...props} />,
+  isEntryPoint: false,
+  credits: 1,
+  inputs: [
+    {
+      name: "Webpage",
+      type: TaskParamType.BROWSER_INSTANCE,
+      required: true,
+    },
+    {
+      name: "Selector",
       type: TaskParamType.STRING,
       required: true,
     },

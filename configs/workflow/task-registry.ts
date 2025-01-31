@@ -10,6 +10,7 @@ import {
   ReadPropertyFromJSONTask,
   AddPropertyToJSONTask,
   NavigateURLTask,
+  ScrollToElementTask,
 } from "./task"
 import { TaskType } from "@/types/task"
 import { WorkflowTask } from "@/types/workflow"
@@ -30,4 +31,5 @@ export const TaskRegistry: Registry = {
   READ_PROPERTY_FROM_JSON: ReadPropertyFromJSONTask,
   ADD_PROPERTY_TO_JSON: AddPropertyToJSONTask,
   NAVIGATE_URL: NavigateURLTask,
+  SCROLL_TO_ELEMENT: ScrollToElementTask,
 }

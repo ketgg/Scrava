@@ -43,6 +43,7 @@ const TaskMenu = (props: Props) => {
             <TaskMenuButton taskType={TaskType.FILL_INPUT} />
             <TaskMenuButton taskType={TaskType.CLICK_ELEMENT} />
             <TaskMenuButton taskType={TaskType.NAVGIATE_URL} />
+            <TaskMenuButton taskType={TaskType.SCROLL_TO_ELEMET} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="timing">
