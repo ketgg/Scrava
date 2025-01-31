@@ -10,6 +10,7 @@ import {
   Brain,
   File,
   Database,
+  Link2,
 } from "lucide-react"
 
 import { TaskType, TaskParamType } from "@/types/task"
@@ -298,6 +299,33 @@ export const AddPropertyToJSONTask = {
     {
       name: "Updated JSON",
       type: TaskParamType.STRING,
+    },
+  ] as const,
+} satisfies WorkflowTask
+
+export const NavigateURLTask = {
+  type: TaskType.NAVGIATE_URL,
+
+  label: "Navigate URL",
+  icon: (props) => <Link2 className="stroke-orange-400" {...props} />,
+  isEntryPoint: false,
+  credits: 2,
+  inputs: [
+    {
+      name: "Webpage",
+      type: TaskParamType.BROWSER_INSTANCE,
+      required: true,
+    },
+    {
+      name: "URL",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Wepage",
+      type: TaskParamType.BROWSER_INSTANCE,
     },
   ] as const,
 } satisfies WorkflowTask

@@ -9,6 +9,7 @@ import {
   ExtractDataWithAITask,
   ReadPropertyFromJSONTask,
   AddPropertyToJSONTask,
+  NavigateURLTask,
 } from "./task"
 import { TaskType } from "@/types/task"
 import { WorkflowTask } from "@/types/workflow"
@@ -28,4 +29,5 @@ export const TaskRegistry: Registry = {
   EXTRACT_DATA_WITH_AI: ExtractDataWithAITask,
   READ_PROPERTY_FROM_JSON: ReadPropertyFromJSONTask,
   ADD_PROPERTY_TO_JSON: AddPropertyToJSONTask,
+  NAVIGATE_URL: NavigateURLTask,
 }
