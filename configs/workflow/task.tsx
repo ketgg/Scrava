@@ -9,6 +9,7 @@ import {
   Send,
   Brain,
   File,
+  Database,
 } from "lucide-react"
 
 import { TaskType, TaskParamType } from "@/types/task"
@@ -264,6 +265,38 @@ export const ReadPropertyFromJSONTask = {
   outputs: [
     {
       name: "Property Value",
+      type: TaskParamType.STRING,
+    },
+  ] as const,
+} satisfies WorkflowTask
+
+export const AddPropertyToJSONTask = {
+  type: TaskType.ADD_PROPERTY_TO_JSON,
+
+  label: "Add Property To JSON",
+  icon: (props) => <Database className="stroke-orange-400" {...props} />,
+  isEntryPoint: false,
+  credits: 4,
+  inputs: [
+    {
+      name: "JSON",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Property Name",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Property Value",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Updated JSON",
       type: TaskParamType.STRING,
     },
   ] as const,

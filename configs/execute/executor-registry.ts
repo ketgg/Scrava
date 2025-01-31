@@ -11,6 +11,7 @@ import { ExecutionEnv } from "@/types/executor"
 import { deliverViaWebhookExecutor } from "./deliver-via-webhook"
 import { extractDataWithAIExecutor } from "./extract-data-with-ai"
 import { readPropertyFromJSONExecutor } from "./read-property-from-json"
+import { addPropertyToJSONExecutor } from "./add-property-to-json"
 
 type ExecutorFn<T extends WorkflowTask> = (
   env: ExecutionEnv<T>
@@ -30,4 +31,5 @@ export const ExecutorRegistry: RegistryType = {
   DELIVER_VIA_WEBHOOK: deliverViaWebhookExecutor,
   EXTRACT_DATA_WITH_AI: extractDataWithAIExecutor,
   READ_PROPERTY_FROM_JSON: readPropertyFromJSONExecutor,
+  ADD_PROPERTY_TO_JSON: addPropertyToJSONExecutor,
 }

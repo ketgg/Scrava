@@ -8,6 +8,7 @@ import {
   DeliverViaWebhookTask,
   ExtractDataWithAITask,
   ReadPropertyFromJSONTask,
+  AddPropertyToJSONTask,
 } from "./task"
 import { TaskType } from "@/types/task"
 import { WorkflowTask } from "@/types/workflow"
@@ -26,4 +27,5 @@ export const TaskRegistry: Registry = {
   DELIVER_VIA_WEBHOOK: DeliverViaWebhookTask,
   EXTRACT_DATA_WITH_AI: ExtractDataWithAITask,
   READ_PROPERTY_FROM_JSON: ReadPropertyFromJSONTask,
+  ADD_PROPERTY_TO_JSON: AddPropertyToJSONTask,
 }

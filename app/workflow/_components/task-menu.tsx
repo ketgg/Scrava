@@ -56,6 +56,7 @@ const TaskMenu = (props: Props) => {
           <AccordionContent className="flex flex-col gap-1">
             <TaskMenuButton taskType={TaskType.READ_PROPERTY_FROM_JSON} />
             {/* TODO: Add Delay task */}
+            <TaskMenuButton taskType={TaskType.ADD_PROPERTY_TO_JSON} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="results">
