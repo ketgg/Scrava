@@ -21,13 +21,27 @@ const TaskMenu = (props: Props) => {
       <Accordion
         type="multiple"
         className="w-full"
-        defaultValue={["extraction"]}
+        defaultValue={["extraction", "interactions", "timing"]}
       >
         <AccordionItem value="extraction">
           <AccordionTrigger className="">Data Extraction</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-1">
             <TaskMenuButton taskType={TaskType.PAGE_TO_HTML} />
             <TaskMenuButton taskType={TaskType.EXTRACT_TEXT_FROM_ELEMENT} />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="interactions">
+          <AccordionTrigger className="">User Interactions</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-1">
+            <TaskMenuButton taskType={TaskType.FILL_INPUT} />
+            <TaskMenuButton taskType={TaskType.CLICK_ELEMENT} />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="timing">
+          <AccordionTrigger className="">Timing controls</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-1">
+            <TaskMenuButton taskType={TaskType.WAIT_FOR_ELEMENT} />
+            {/* TODO: Add Delay task */}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

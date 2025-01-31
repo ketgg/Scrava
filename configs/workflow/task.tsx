@@ -1,4 +1,12 @@
-import { CodeIcon, GlobeIcon, TextIcon, LucideProps } from "lucide-react"
+import {
+  CodeIcon,
+  GlobeIcon,
+  TextIcon,
+  LucideProps,
+  Edit3,
+  MousePointerClick,
+  Eye,
+} from "lucide-react"
 
 import { TaskType, TaskParamType } from "@/types/task"
 import { WorkflowTask } from "@/types/workflow"
@@ -79,6 +87,104 @@ export const ExtractTextFromElementTask = {
     {
       name: "Extracted Text",
       type: TaskParamType.STRING,
+    },
+  ] as const,
+} satisfies WorkflowTask
+
+export const FillInputTask = {
+  type: TaskType.FILL_INPUT,
+
+  label: "Fill Input",
+  icon: (props) => <Edit3 className="stroke-orange-400" {...props} />,
+  isEntryPoint: false,
+  credits: 1,
+  inputs: [
+    {
+      name: "Webpage",
+      type: TaskParamType.BROWSER_INSTANCE,
+      required: true,
+    },
+    {
+      name: "Selector",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Value",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Webpage", // Updated webpage after the input has been filled
+      type: TaskParamType.BROWSER_INSTANCE,
+    },
+  ] as const,
+} satisfies WorkflowTask
+
+export const ClickElementTask = {
+  type: TaskType.CLICK_ELEMENT,
+
+  label: "Click Element",
+  icon: (props) => (
+    <MousePointerClick className="stroke-orange-400" {...props} />
+  ),
+  isEntryPoint: false,
+  credits: 1,
+  inputs: [
+    {
+      name: "Webpage",
+      type: TaskParamType.BROWSER_INSTANCE,
+      required: true,
+    },
+    {
+      name: "Selector",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Webpage", // Updated webpage after the element has been clicked
+      type: TaskParamType.BROWSER_INSTANCE,
+    },
+  ] as const,
+} satisfies WorkflowTask
+
+export const WaitForElementTask = {
+  type: TaskType.WAIT_FOR_ELEMENT,
+
+  label: "Wait For Element",
+  icon: (props) => <Eye className="stroke-blue-400" {...props} />,
+  isEntryPoint: false,
+  credits: 1,
+  inputs: [
+    {
+      name: "Webpage",
+      type: TaskParamType.BROWSER_INSTANCE,
+      required: true,
+    },
+    {
+      name: "Selector",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Visibility",
+      type: TaskParamType.SELECT,
+      required: true,
+      hideHandle: true,
+      options: [
+        { label: "Visible", value: "visible" },
+        { label: "Hidden", value: "hidden" },
+      ],
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Webpage", // Updated webpage after the element has been clicked
+      type: TaskParamType.BROWSER_INSTANCE,
     },
   ] as const,
 } satisfies WorkflowTask

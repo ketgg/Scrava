@@ -8,6 +8,7 @@ import BrowserInstanceParam from "./param/browser-instance-param"
 
 import { TaskParam, TaskParamType } from "@/types/task"
 import { AppNode } from "@/types/app-node"
+import SelectParam from "./param/select-param"
 
 type Props = {
   param: TaskParam
@@ -73,6 +74,15 @@ const NodeParamField = ({ param, nodeId, disabled }: Props) => {
           param={param}
           value={""}
           updateNodeParamValue={updateNodeParamValue}
+        />
+      )
+    case TaskParamType.SELECT:
+      return (
+        <SelectParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
         />
       )
     default:

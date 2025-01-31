@@ -50,6 +50,7 @@ import ExecutionStatusIndicator, {
   ExecutionStatusLabel,
 } from "@/app/workflow/runs/[workflowId]/_components/execution-status-indicator"
 import next from "next"
+import DuplicateWorkflow from "./duplicate-workflow"
 
 type Props = {
   workflow: Workflow
@@ -64,7 +65,8 @@ const WorkflowCard = ({ workflow }: Props) => {
   const isDraft = workflow.status === WorkflowStatus.DRAFT
   const isPublished = workflow.status === WorkflowStatus.PUBLISHED
   return (
-    <Card className="shadow-none hover:shadow-sm transition-shadow duration-150">
+    // group-card class so when card is hovered we show the duplicate icon
+    <Card className="shadow-none hover:shadow-sm transition-shadow duration-150 group/card">
       <CardContent className="flex items-center justify-between p-4">
         <div className="flex items-center justify-end space-x-2">
           <div
@@ -81,12 +83,15 @@ const WorkflowCard = ({ workflow }: Props) => {
           </div>
           <div>
             <h3 className="flex items-center text-sm font-medium text-muted-foreground">
-              <Link
-                className="flex items-center hover:underline"
-                href={`/workflow/editor/${workflow.id}`}
-              >
-                {workflow.name}
-              </Link>
+              <TooltipWrapper content={workflow.description}>
+                <Link
+                  className="flex items-center hover:underline"
+                  href={`/workflow/editor/${workflow.id}`}
+                >
+                  {workflow.name}
+                </Link>
+              </TooltipWrapper>
+
               {isDraft && (
                 <span className="ml-2 px-2 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
                   Draft
@@ -97,6 +102,9 @@ const WorkflowCard = ({ workflow }: Props) => {
                   Published
                 </span>
               )}
+
+              {/* Duplicate workflow */}
+              <DuplicateWorkflow workflowId={workflow.id} />
             </h3>
             <ScheduleSection
               isDraft={workflow.status === "DRAFT"}
