@@ -8,6 +8,7 @@ import { waitForElementExecutor } from "./wait-for-element"
 import { TaskType } from "@/types/task"
 import { WorkflowTask } from "@/types/workflow"
 import { ExecutionEnv } from "@/types/executor"
+import { deliverViaWebhookExecutor } from "./deliver-via-webhook"
 
 type ExecutorFn<T extends WorkflowTask> = (
   env: ExecutionEnv<T>
@@ -24,4 +25,5 @@ export const ExecutorRegistry: RegistryType = {
   FILL_INPUT: fillInputExecutor,
   CLICK_ELEMENT: clickElementExecutor,
   WAIT_FOR_ELEMENT: waitForElementExecutor,
+  DELIVER_VIA_WEBHOOK: deliverViaWebhookExecutor,
 }

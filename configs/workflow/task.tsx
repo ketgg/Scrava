@@ -6,6 +6,7 @@ import {
   Edit3,
   MousePointerClick,
   Eye,
+  Send,
 } from "lucide-react"
 
 import { TaskType, TaskParamType } from "@/types/task"
@@ -187,4 +188,26 @@ export const WaitForElementTask = {
       type: TaskParamType.BROWSER_INSTANCE,
     },
   ] as const,
+} satisfies WorkflowTask
+
+export const DeliverViaWebhookTask = {
+  type: TaskType.DELIVER_VIA_WEBHOOK,
+
+  label: "Deliver Via Webhook",
+  icon: (props) => <Send className="stroke-emerald-400" {...props} />,
+  isEntryPoint: false,
+  credits: 1,
+  inputs: [
+    {
+      name: "Target URL",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Body",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [] as const, // TODO - Add the response status
 } satisfies WorkflowTask
