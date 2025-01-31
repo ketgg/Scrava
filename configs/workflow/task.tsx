@@ -7,6 +7,8 @@ import {
   MousePointerClick,
   Eye,
   Send,
+  Brain,
+  File,
 } from "lucide-react"
 
 import { TaskType, TaskParamType } from "@/types/task"
@@ -210,4 +212,59 @@ export const DeliverViaWebhookTask = {
     },
   ] as const,
   outputs: [] as const, // TODO - Add the response status
+} satisfies WorkflowTask
+
+export const ExtractDataWithAITask = {
+  type: TaskType.EXTRACT_DATA_WITH_AI,
+
+  label: "Extract Data With AI",
+  icon: (props) => <Brain className="stroke-rose-400" {...props} />,
+  isEntryPoint: false,
+  credits: 4,
+  inputs: [
+    {
+      name: "Content",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Credentials",
+      type: TaskParamType.CREDENTIAL,
+      required: true,
+    },
+    {
+      name: "Prompt",
+      type: TaskParamType.STRING,
+      variant: "textarea",
+      required: true,
+    },
+  ] as const,
+  outputs: [{ name: "Extracted Data", type: TaskParamType.STRING }] as const,
+} satisfies WorkflowTask
+
+export const ReadPropertyFromJSONTask = {
+  type: TaskType.READ_PROPERTY_FROM_JSON,
+
+  label: "Read Property From JSON",
+  icon: (props) => <File className="stroke-orange-400" {...props} />,
+  isEntryPoint: false,
+  credits: 4,
+  inputs: [
+    {
+      name: "JSON",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+    {
+      name: "Property Name",
+      type: TaskParamType.STRING,
+      required: true,
+    },
+  ] as const,
+  outputs: [
+    {
+      name: "Property Value",
+      type: TaskParamType.STRING,
+    },
+  ] as const,
 } satisfies WorkflowTask

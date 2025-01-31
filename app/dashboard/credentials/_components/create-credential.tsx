@@ -62,6 +62,7 @@ const CreateCredential = ({ triggerText }: Props) => {
       toast.success("Credential created successfully", {
         id: "create-credential",
       })
+      form.reset()
       setIsOpen(false)
     },
     onError: () => {
@@ -83,7 +84,6 @@ const CreateCredential = ({ triggerText }: Props) => {
     <Dialog
       open={isOpen}
       onOpenChange={(open) => {
-        form.reset()
         setIsOpen(open)
       }}
     >

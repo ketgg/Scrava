@@ -21,13 +21,20 @@ const TaskMenu = (props: Props) => {
       <Accordion
         type="multiple"
         className="w-full"
-        defaultValue={["extraction", "interactions", "timing", "results"]}
+        defaultValue={[
+          "extraction",
+          "interactions",
+          "timing",
+          "results",
+          "storage",
+        ]}
       >
         <AccordionItem value="extraction">
           <AccordionTrigger className="">Data Extraction</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-1">
             <TaskMenuButton taskType={TaskType.PAGE_TO_HTML} />
             <TaskMenuButton taskType={TaskType.EXTRACT_TEXT_FROM_ELEMENT} />
+            <TaskMenuButton taskType={TaskType.EXTRACT_DATA_WITH_AI} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="interactions">
@@ -41,6 +48,13 @@ const TaskMenu = (props: Props) => {
           <AccordionTrigger className="">Timing controls</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-1">
             <TaskMenuButton taskType={TaskType.WAIT_FOR_ELEMENT} />
+            {/* TODO: Add Delay task */}
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="storage">
+          <AccordionTrigger className="">Storage</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-1">
+            <TaskMenuButton taskType={TaskType.READ_PROPERTY_FROM_JSON} />
             {/* TODO: Add Delay task */}
           </AccordionContent>
         </AccordionItem>

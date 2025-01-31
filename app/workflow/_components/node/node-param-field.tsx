@@ -9,6 +9,7 @@ import BrowserInstanceParam from "./param/browser-instance-param"
 import { TaskParam, TaskParamType } from "@/types/task"
 import { AppNode } from "@/types/app-node"
 import SelectParam from "./param/select-param"
+import CredentialParam from "./param/credential-param"
 
 type Props = {
   param: TaskParam
@@ -79,6 +80,15 @@ const NodeParamField = ({ param, nodeId, disabled }: Props) => {
     case TaskParamType.SELECT:
       return (
         <SelectParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
+        />
+      )
+    case TaskParamType.CREDENTIAL:
+      return (
+        <CredentialParam
           param={param}
           value={value}
           updateNodeParamValue={updateNodeParamValue}

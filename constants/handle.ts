@@ -10,4 +10,5 @@ export const HANDLE_COLORS: Record<TaskParamType, string> = {
   // [TaskParamType.NUMBER]: "bg-muted-foreground",
   // [TaskParamType.BOOLEAN]: "bg-muted-foreground",
   [TaskParamType.SELECT]: "!bg-rose-400",
+  [TaskParamType.CREDENTIAL]: "!bg-teal-400",
 }
