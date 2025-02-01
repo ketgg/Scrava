@@ -14,17 +14,17 @@ export const launchBrowserExecutor = async (
     let browser
     // Open the browser in background
     // TODO - Use BrightData's scraping browser instead
-    if (proxyServerUrl && proxyPassword && proxyUsername) {
-      browser = await puppeteer.launch({
-        headless: true,
+    // if (proxyServerUrl && proxyPassword && proxyUsername) {
+    //   browser = await puppeteer.launch({
+    //     headless: true,
 
-        args: [`--proxy-server=${proxyServerUrl}`],
-      })
-    } else {
-      browser = await puppeteer.launch({
-        headless: true,
-      })
-    }
+    //     args: [`--proxy-server=${proxyServerUrl}`],
+    //   })
+    // } else {
+    browser = await puppeteer.launch({
+      headless: true,
+    })
+    // }
 
     environment.log.info(
       `Browser launched successfully: ${await browser.version()}`
@@ -33,12 +33,12 @@ export const launchBrowserExecutor = async (
 
     const page = await browser.newPage()
 
-    if (proxyServerUrl && proxyPassword && proxyUsername) {
-      await page.authenticate({
-        username: proxyUsername,
-        password: proxyPassword,
-      })
-    }
+    // if (proxyServerUrl && proxyPassword && proxyUsername) {
+    //   await page.authenticate({
+    //     username: proxyUsername,
+    //     password: proxyPassword,
+    //   })
+    // }
 
     await page.goto(websiteUrl)
 
